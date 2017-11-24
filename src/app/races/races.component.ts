@@ -13,6 +13,8 @@ export class RacesComponent implements OnInit {
   constructor(public service: RaceService) {}
 
   ngOnInit() {
-    this.races = this.service.list();
+    this.service
+      .list()
+      .subscribe(races => (this.races = races), console.error, () => console.log('done'));
   }
 }
