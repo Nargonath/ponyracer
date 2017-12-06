@@ -10,7 +10,9 @@ import { UserModel } from '@app/models/user.model';
 export class UserService {
   userEvents: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(undefined);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.retrieveUser();
+  }
 
   register(login: string, password: string, birthYear: number): Observable<UserModel> {
     return this.http.post<UserModel>(`http://ponyracer.ninja-squad.com/api/users`, {
@@ -23,6 +25,21 @@ export class UserService {
   authenticate(credentials: { login: string; password: string }): Observable<UserModel> {
     return this.http
       .post<UserModel>(`http://ponyracer.ninja-squad.com/api/users/authentication`, credentials)
-      .do<UserModel>(user => this.userEvents.next(user));
+      .do<UserModel>(user => this.storeLoggedInUser(user));
+  }
+
+  retrieveUser() {
+    const serializedUser = window.localStorage.getItem('rememberMe');
+
+    if (!serializedUser) {
+      return null;
+    }
+
+    return this.userEvents.next(JSON.parse(serializedUser));
+  }
+
+  storeLoggedInUser(user: UserModel) {
+    window.localStorage.setItem('rememberMe', JSON.stringify(user));
+    this.userEvents.next(user);
   }
 }
