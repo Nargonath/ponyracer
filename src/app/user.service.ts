@@ -15,4 +15,11 @@ export class UserService {
       birthYear,
     });
   }
+
+  authenticate(credentials: { login: string; password: string }): Observable<UserModel> {
+    return this.http.post<UserModel>(
+      `http://ponyracer.ninja-squad.com/api/users/authentication`,
+      credentials
+    );
+  }
 }
