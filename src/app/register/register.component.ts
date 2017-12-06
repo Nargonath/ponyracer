@@ -37,7 +37,6 @@ export class RegisterComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
-    console.log('router = ', this.router);
     this.loginCtrl = fb.control('', [Validators.required, Validators.minLength(3)]);
     this.passwordCtrl = fb.control('', [Validators.required]);
     this.confirmPasswordCtrl = fb.control('', [Validators.required]);
