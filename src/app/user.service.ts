@@ -42,4 +42,9 @@ export class UserService {
     window.localStorage.setItem('rememberMe', JSON.stringify(user));
     this.userEvents.next(user);
   }
+
+  logout() {
+    window.localStorage.removeItem('rememberMe');
+    this.userEvents.next(null);
+  }
 }
