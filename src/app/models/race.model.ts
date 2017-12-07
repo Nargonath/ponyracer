@@ -5,5 +5,5 @@ export interface RaceModel {
   startInstant: string;
   name: string;
   ponies: Array<PonyModel>;
-
+  betPonyId?: number;
 } // prettier-ignore
