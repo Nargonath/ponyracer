@@ -9,6 +9,7 @@ import { PonyModel } from '@app/models/pony.model';
 })
 export class PonyComponent implements OnInit {
   @Input() ponyModel: PonyModel;
+  @Input() isRunning: boolean;
   @Output() ponyClicked: EventEmitter<PonyModel> = new EventEmitter();
 
   constructor() {}
@@ -16,7 +17,8 @@ export class PonyComponent implements OnInit {
   ngOnInit() {}
 
   getPonyImageUrl() {
-    return `assets/images/pony-${this.ponyModel.color.toLowerCase()}.gif`;
+    const runningPart = this.isRunning ? '-running' : '';
+    return `assets/images/pony-${this.ponyModel.color.toLowerCase()}${runningPart}.gif`;
   }
 
   clicked() {
